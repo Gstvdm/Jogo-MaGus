@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://image/Bunny animations/bunny_moving_3.png" type="Texture" id=1]
+[ext_resource path="res://image/Bunny animations/bunny_moving_1.png" type="Texture" id=2]
+[ext_resource path="res://image/Bunny animations/bunny_moving_2.png" type="Texture" id=3]
+[ext_resource path="res://image/Bunny animations/bunny_moving_4.png" type="Texture" id=4]
+[ext_resource path="res://Player.gd" type="Script" id=5]
+[ext_resource path="res://Carrot.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "jumping",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "dying",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "moving",
+"speed": 16.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 21.625
+height = 2.0
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 100, 410 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+Carrot = ExtResource( 6 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "moving"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2, 1 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( -400, -410 )
+anchor_mode = 0
+current = true
+limit_left = -1000
+limit_right = 1150
+drag_margin_h_enabled = true
+smoothing_enabled = true
+drag_margin_left = 1.0
+drag_margin_right = 1.0
+drag_margin_bottom = 1.0
+
+[node name="Background" parent="." instance=ExtResource( 7 )]
